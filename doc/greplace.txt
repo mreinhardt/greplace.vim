@@ -1,4 +1,4 @@
-*greplace.txt*	Plugin for replacing pattern across multiple files
+*greplace.txt*  Plugin for replacing pattern across multiple files
 
 Author: Yegappan Lakshmanan  (yegappan AT yahoo DOT com)
 For Vim version 7.0 and above
@@ -21,8 +21,8 @@ Installation~
    should have the following two files (the directory structure should be
    preserved):
 
-	plugin/greplace.vim - main global replace plugin file
-	doc/greplace.txt    - documentation (help) file
+    plugin/greplace.vim - main global replace plugin file
+    doc/greplace.txt    - documentation (help) file
 
 2. Change to the $HOME/.vim/doc or $HOME/vimfiles/doc or $VIM/vimfiles/doc
    directory, start Vim and run the ":helptags ." command to process the
@@ -57,7 +57,7 @@ One example sequence of commands for using this plugin is:
     :Greplace
     <The above command will load each of the buffer which needs to be changed
     and ask you to confirm whether to make the change or not>
-    
+
     :wall
     <To save all the modified buffers>
 
@@ -71,6 +71,12 @@ in the specified files. The ":grep" command uses the program specified by the
 is set to either grep (on Unix) or findstr (on MS-Windows). By modifying the
 "grepprg" option, you can also use other programs for searching. To use the
 Vim internal grep, set the "grepprg" option to "internal".
+
+To customize the command used for ":Gsearch" you can update both the command
+and the default options. For example, to use "ag":
+
+    set g:greplace_cmd=ag
+    let g:greplace_cmd_opts='--recurse --hidden --numbers --noheading'
 
 The syntax of the ":Gsearch" command is:
 >

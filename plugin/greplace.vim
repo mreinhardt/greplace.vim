@@ -114,7 +114,7 @@ function! s:gReplace()
 
             let e_idx1 += 2
 
-            if (s_idx + 1) == e_idx1 
+            if (s_idx + 1) == e_idx1
                 " If there is nothing to highlight, then highlight the
                 " last character
                 let e_idx1 += 1
@@ -221,9 +221,22 @@ endfunction
 " gSearch
 " Search for a pattern in a group of files using ':grep'
 function! s:gSearch(type, ...)
-    let grep_opt  = ''
     let pattern   = ''
     let filenames = ''
+
+    if exists("g:greplace_cmd")
+        let grep_cmd = '!' . g:greplace_cmd
+    else
+        " Use ! after grep, so that Vim doesn't automatically jump to
+        " the first match.
+        let grep_cmd = 'grep!'
+    endif
+
+    if exists("g:greplace_cmd_opts")
+      let grep_opt = g:greplace_cmd_opts
+    else
+      let grep_opt = '-r'
+    endif
 
     " Parse the arguments
     " grep command-line flags are specified using the "-flag" format
@@ -256,9 +269,7 @@ function! s:gSearch(type, ...)
     endif
 
     if a:type == 'grep'
-        if filenames == ''
-            let filenames = input('Search in files: ', '*', 'file')
-        endif
+        let filenames = '.'
     elseif a:type == 'args'
         " Search in all the filenames in the argument list
         let arg_cnt = argc()
@@ -289,9 +300,7 @@ function! s:gSearch(type, ...)
         return
     endif
 
-    " Use ! after grep, so that Vim doesn't automatically jump to the
-    " first match
-    let grep_cmd = 'grep! ' . grep_opt . ' ' . pattern . ' ' . filenames
+    let grep_cmd = grep_cmd . ' ' . grep_opt . ' ' . pattern . ' ' . filenames
 
     " Run the grep and get the matches
     exe grep_cmd
