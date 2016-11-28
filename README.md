@@ -51,22 +51,16 @@ the default options.
 
   * [git grep](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html)
 
-        ```
         let g:greplace_cmd='git grep'
         let g:greplace_cmd_opts='--line-number'
-        ```
 
   * [ag](https://github.com/ggreer/the_silver_searcher)
 
-        ```
         let g:greplace_cmd='ag'
-        let g:greplace_cmd_opts = '--numbers --noheading'
-        ```
+        let g:greplace_cmd_opts='--numbers --noheading'
 
   * [ack](http://beyondgrep.com/)
 
-        ```
         let g:greplace_cmd='ack'
-        let g:greplace_cmd_opts = '--noheading'
-        ```
+        let g:greplace_cmd_opts='--noheading'
 
