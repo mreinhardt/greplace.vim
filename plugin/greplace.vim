@@ -216,6 +216,7 @@ function! s:gReplace_show_matches()
     command! -buffer -nargs=0 -bang Greplace call s:gReplace()
 
     let s:save_qf_list = new_qf
+    redraw!
 endfunction
 
 " gSearch
@@ -224,12 +225,9 @@ function! s:gSearch(type, ...)
     let pattern   = ''
     let filenames = ''
 
+    let old_grepprg = &grepprg
     if exists("g:greplace_cmd")
-        let grep_cmd = '!' . g:greplace_cmd
-    else
-        " Use ! after grep, so that Vim doesn't automatically jump to
-        " the first match.
-        let grep_cmd = 'grep!'
+        let &grepprg=g:greplace_cmd
     endif
 
     if exists("g:greplace_cmd_opts")
@@ -300,10 +298,12 @@ function! s:gSearch(type, ...)
         return
     endif
 
-    let grep_cmd = grep_cmd . ' ' . grep_opt . ' ' . pattern . ' ' . filenames
+    let grep_cmd = 'grep! ' . grep_opt . ' ' . pattern . ' ' . filenames
 
     " Run the grep and get the matches
-    exe grep_cmd
+    silent! exe grep_cmd
+
+    let &grepprg=old_grepprg
 
     call s:gReplace_show_matches()
 endfunction
